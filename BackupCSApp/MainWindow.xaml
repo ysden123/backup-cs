@@ -1,0 +1,38 @@
+﻿<Window x:Class="BackupCSApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BackupCSApp"
+        mc:Ignorable="d"
+        Title="backup-cs" Height="450" Width="668"  WindowStartupLocation="CenterScreen">
+    <StackPanel Orientation="Horizontal">
+        <GroupBox Header="Current" Margin="10,10,10,10" Width="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Project:"/>
+                <TextBox x:Name="ProjectName" Grid.Row="0" Grid.Column="1" Width="200" Height="20" VerticalAlignment="Top" Margin="10,10,10,10" IsReadOnly="True"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Action:"/>
+                <TextBox x:Name="ActionName" Grid.Row="1" Grid.Column="1" Width="200" Height="20" VerticalAlignment="Top" Margin="10,10,10,10" IsReadOnly="True"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="Progress:"/>
+                <ProgressBar x:Name="ProgressBar" Grid.Row="2" Grid.Column="1" Width="200" Height="20" VerticalAlignment="Top" Margin="10,10,10,10"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="Duration:"/>
+                <TextBox x:Name="Duration" Grid.Row="3" Grid.Column="1" Width="200" Height="20" VerticalAlignment="Top" Margin="10,10,10,10" IsReadOnly="True"/>
+            </Grid>
+            
+        </GroupBox>
+
+        <GroupBox Header="Total" Margin="10,10,10,10" Width="Auto">
+            <TextBox x:Name="Total" Margin="10,10,10,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Width="300"/>
+        </GroupBox>
+    </StackPanel>
+</Window>

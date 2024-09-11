@@ -1,6 +1,6 @@
-﻿using BackupCS;
+﻿using BackupCSLib.Service;
 
-namespace BackupCSTest
+namespace BackupCSTest.Service
 {
     public class VersionServiceTest
     {

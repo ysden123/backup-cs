@@ -1,7 +1,7 @@
-using BackupCS;
+using BackupCSLib.Service;
 using System.Text.Json;
 
-namespace BackupCSTest
+namespace BackupCSTest.Service
 {
     public class ConfigTest
     {
@@ -64,7 +64,7 @@ namespace BackupCSTest
 
             var configuration = JsonSerializer.Deserialize<List<FolderConfig>>(json);
             Assert.That(configuration, Is.Not.Null);
-            Assert.That(configuration.ElementAt<FolderConfig>(1).Name, Is.EqualTo("Photo"));
+            Assert.That(configuration.ElementAt(1).Name, Is.EqualTo("Photo"));
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace BackupCSTest
         {
             var configuration = FolderConfig.ReadConfiguration();
             Assert.That(configuration, Is.Not.Null);
-            Assert.That(configuration.ElementAt<FolderConfig>(1).Name, Is.EqualTo("Photo"));
+            Assert.That(configuration.ElementAt(1).Name, Is.EqualTo("Photo"));
         }
     }
 }
