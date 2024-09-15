@@ -24,7 +24,7 @@ namespace BackupCSLib.Service
 
         public static List<FolderConfig>? ReadConfiguration()
         {
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "backup-s3", "configuration.json");
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "backup-cs", "configuration.json");
             List<FolderConfig>? configuration = JsonSerializer.Deserialize<List<FolderConfig>>(File.ReadAllText(path));
             return configuration;
         }

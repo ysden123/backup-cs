@@ -112,7 +112,7 @@ namespace BackupCSLib.Service
             var hours = dif.Hours;
             var minutes = dif.Minutes;
             var seconds = dif.Seconds;
-            return $"{hours}:{minutes}:{seconds}";
+            return $"{hours:D2}:{minutes:D2}:{seconds:D2}";
         }
     }
 }
