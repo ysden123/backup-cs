@@ -1,14 +1,32 @@
 ﻿using System.IO;
+using System.Runtime.InteropServices;
 
 namespace BackupCSLib.Service
 {
     public class BackupService
     {
+        // Определение флагов для SetThreadExecutionState
+        [Flags]
+        public enum EXECUTION_STATE : uint
+        {
+            ES_AWAYMODE_REQUIRED = 0x00000040, // Предотвращает переход в "режим отсутствия"
+            ES_CONTINUOUS = 0x80000000,        // Требуется для того, чтобы состояние оставалось активным
+            ES_DISPLAY_REQUIRED = 0x00000002,  // Предотвращает выключение дисплея
+            ES_SYSTEM_REQUIRED = 0x00000001    // Предотвращает переход в спящий режим
+        }
+
+        // Импорт функции SetThreadExecutionState из kernel32.dll
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern EXECUTION_STATE SetThreadExecutionState(EXECUTION_STATE esFlags);
         public required List<FolderConfig> Folders { get; init; }
         public required Actions TheActions { get; init; }
 
         public void MakeCopy()
         {
+            // Устанавливаем состояние, чтобы система не засыпала и дисплей не выключался
+            // Добавляем ES_AWAYMODE_REQUIRED для предотвращения "режима отсутствия"
+            SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS | EXECUTION_STATE.ES_DISPLAY_REQUIRED | EXECUTION_STATE.ES_SYSTEM_REQUIRED | EXECUTION_STATE.ES_AWAYMODE_REQUIRED);
+
             foreach (var folder in Folders)
             {
                 MakeCopy(folder);
@@ -20,6 +38,9 @@ namespace BackupCSLib.Service
             TheActions.SetProjectName("");
             TheActions.SetActionName("All done");
             TheActions.SetDuration("");
+
+            // Возвращаем состояние по умолчанию, чтобы система могла снова засыпать
+            SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
         }
 
         private void MakeCopy(FolderConfig folder)
