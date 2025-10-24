@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BackupCSLib.Service
+﻿namespace BackupCSLib.Service
 {
-    public struct Actions
+    public readonly struct Actions
     {
         public required Action<string> SetProjectName { get; init; }
         public required Action<string> SetActionName { get; init; }

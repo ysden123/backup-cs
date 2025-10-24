@@ -1,4 +1,5 @@
 ﻿using BackupCSLib.Service;
+using Serilog;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,8 +10,15 @@ namespace BackupCSApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ILogger _logger;
         public MainWindow()
         {
+#if DEBUG
+            BackupCSLib.LogBuilder.Initialize("BackupCSApp", "backup-cs-debug");
+#else
+            BackupCSLib.LogBuilder.Initialize("BackupCSApp", "backup-cs");
+#endif
+            _logger ??= Log.ForContext<MainWindow>();
             InitializeComponent();
 
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
@@ -32,6 +40,7 @@ namespace BackupCSApp
                 AddTotalLine = AddTotalLine
             };
 
+            _logger.Information("Starting backup");
             Backup backup = new() { TheActionsactions = actions };
             backup.Run();
         }
@@ -41,6 +50,7 @@ namespace BackupCSApp
             this.Dispatcher.Invoke(new Action(() =>
             {
                 ProjectName.Text = projectName;
+                _logger.Information("Project: {ProjectName}", projectName);
             }));
         }
 
@@ -91,6 +101,7 @@ namespace BackupCSApp
             this.Dispatcher.Invoke(new Action(() =>
             {
                 Total.Text += totalLine + "\n";
+                _logger.Information("{TotalLine}", totalLine);
             }));
         }
     }

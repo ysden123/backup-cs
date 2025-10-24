@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using Serilog;
 using System.Runtime.InteropServices;
 
 namespace BackupCSLib.Service
 {
     public class BackupService
     {
+        private readonly ILogger _logger;
+
         // Определение флагов для SetThreadExecutionState
         [Flags]
         public enum EXECUTION_STATE : uint
@@ -20,6 +22,10 @@ namespace BackupCSLib.Service
         public static extern EXECUTION_STATE SetThreadExecutionState(EXECUTION_STATE esFlags);
         public required List<FolderConfig> Folders { get; init; }
         public required Actions TheActions { get; init; }
+        public BackupService()
+        {
+            _logger = Log.ForContext<BackupService>();
+        }
 
         public void MakeCopy()
         {
@@ -47,7 +53,7 @@ namespace BackupCSLib.Service
         {
             try
             {
-                //Console.WriteLine($"Create backup for project {folder.Name}");
+                _logger.Information($"Create backup for project {folder.Name}");
                 TheActions.AddTotalLine("\n");
                 TheActions.SetProjectName(folder.Name!);
                 TheActions.AddTotalLine($"Processing {folder.Name!}");
@@ -86,12 +92,7 @@ namespace BackupCSLib.Service
                 TheActions.AddTotalLine($"Backup {filesToCopy.Count} files to {dstFolderPath}");
                 TheActions.InitProgressBar(0, filesToCopy.Count);
                 TheActions.SetProgressBar(0);
-                // todo remove it!!!
-                /*Console.WriteLine("File list to copy:");
-                foreach (var entry in filesToCopy)
-                {
-                    Console.WriteLine($"{entry.Key} -> {entry.Value}");
-                }*/
+
                 var count = 0;
                 var outputStep = 100;
                 var outputCount = 0;
@@ -114,6 +115,7 @@ namespace BackupCSLib.Service
                     }
                     catch (Exception ex)
                     {
+                        _logger.Error($"Error copying file {entry.Key} to {entry.Value}: {ex.Message}");
                         TheActions.AddTotalLine($"!!!ERROR: {ex.Message}");
                     }
                 }
@@ -122,6 +124,7 @@ namespace BackupCSLib.Service
             }
             catch (Exception e)
             {
+                _logger.Error($"Error in backup for project {folder.Name}: {e.Message}");
                 TheActions.AddTotalLine($"ERROR: {e.Message}");
             }
         }

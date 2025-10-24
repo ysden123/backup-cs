@@ -1,18 +1,23 @@
 using BackupCSLib.Service;
+using Serilog;
 using System.Text.Json;
 
 namespace BackupCSTest.Service
 {
     public class ConfigTest
     {
+        private  ILogger _logger;
         [SetUp]
         public void Setup()
         {
+            BackupCSLib.LogBuilder.Initialize("BackupCSTest", "backupcs-test");
+            _logger ??= Log.ForContext<ConfigTest>();
         }
 
         [Test]
         public void ParseFolderConfig()
         {
+            _logger.Information("ParseFolderConfig");
             string json = """
                 {
                   "name": "My Documents D",
@@ -37,6 +42,7 @@ namespace BackupCSTest.Service
         [Test]
         public void ParseConfiguration()
         {
+            _logger.Information("ParseConfiguration");
             string json = """
                 [
                   {
@@ -70,6 +76,7 @@ namespace BackupCSTest.Service
         [Test]
         public void ParseRealConfiguration()
         {
+            _logger.Information("ParseRealConfiguration");
             var configuration = FolderConfig.ReadConfiguration();
             Assert.That(configuration, Is.Not.Null);
             Assert.That(configuration.ElementAt(1).Name, Is.EqualTo("Photo"));

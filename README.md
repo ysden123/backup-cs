@@ -1,3 +1,3 @@
-= backup-cs
+# backup-cs
 
 Backup utility (C#)

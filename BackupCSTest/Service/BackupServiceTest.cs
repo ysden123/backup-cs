@@ -22,18 +22,6 @@ namespace BackupCSTest.Service
         [Test]
         public void MakeyCopyTest1()
         {
-            /*            var folderConfig = new FolderConfig()
-                        {
-                            Name = "test",
-                            Source = "c:\\work\\src\\",
-                            Destination = "c:\\work\\testCleaner",
-                            DirectoriesToSkip = [],
-                            MaxBackupDirectories = 2
-                        };
-
-                        BackupService backupService = new () { Folders = [folderConfig] };
-                        backupService.MakeCopy();
-            */
             var folderConfig = new FolderConfig()
             {
                 Name = "test",
