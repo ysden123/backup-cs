@@ -1,5 +1,4 @@
 ﻿using Serilog;
-using System.Reflection;
 
 namespace BackupCSLib
 {
@@ -24,9 +23,8 @@ namespace BackupCSLib
                .CreateLogger();
 #else
             Log.Logger = new LoggerConfiguration()
-               .MinimumLevel.Error()
+               .MinimumLevel.Information()
                .Enrich.WithThreadId()
-               .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext} [{ThreadId}] {Message:lj}{NewLine}{Exception}")
                .WriteTo.File(fileName,
                rollingInterval: RollingInterval.Month,
                outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {SourceContext} [{ThreadId}] {Message:lj}{NewLine}{Exception}")

@@ -14,9 +14,9 @@ namespace BackupCSApp
         public MainWindow()
         {
 #if DEBUG
-            BackupCSLib.LogBuilder.Initialize("BackupCSApp", "backup-cs-debug");
+            BackupCSLib.LogBuilder.Initialize("backup-cs", "backup-cs-debug");
 #else
-            BackupCSLib.LogBuilder.Initialize("BackupCSApp", "backup-cs");
+            BackupCSLib.LogBuilder.Initialize("backup-cs", "backup-cs");
 #endif
             _logger ??= Log.ForContext<MainWindow>();
             InitializeComponent();
