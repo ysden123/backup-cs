@@ -10,7 +10,7 @@ namespace BackupCSTest.Service
         [SetUp]
         public void Setup()
         {
-            BackupCSLib.LogBuilder.Initialize("BackupCSTest", "backupcs-test");
+            LogBuilder.Initialize();
             _logger ??= Log.ForContext<ConfigTest>();
         }
 

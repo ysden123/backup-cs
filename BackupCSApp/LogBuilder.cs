@@ -1,8 +1,9 @@
 ﻿using Serilog;
+using System.IO;
 
-namespace BackupCSLib
+namespace BackupCSApp
 {
-    public static class LogBuilder
+    internal static class LogBuilder
     {
         private static bool _isInitialized = false;
 
@@ -30,7 +31,6 @@ namespace BackupCSLib
                outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {SourceContext} [{ThreadId}] {Message:lj}{NewLine}{Exception}")
            .CreateLogger();
 #endif
-
                 _isInitialized = true;
             }
         }

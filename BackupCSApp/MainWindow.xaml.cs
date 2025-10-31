@@ -10,13 +10,13 @@ namespace BackupCSApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ILogger _logger;
+        private readonly ILogger _logger;
         public MainWindow()
         {
 #if DEBUG
-            BackupCSLib.LogBuilder.Initialize("backup-cs", "backup-cs-debug");
+            LogBuilder.Initialize("backup-cs", "backup-cs-debug");
 #else
-            BackupCSLib.LogBuilder.Initialize("backup-cs", "backup-cs");
+            LogBuilder.Initialize("backup-cs", "backup-cs");
 #endif
             _logger ??= Log.ForContext<MainWindow>();
             InitializeComponent();
@@ -50,7 +50,8 @@ namespace BackupCSApp
             this.Dispatcher.Invoke(new Action(() =>
             {
                 ProjectName.Text = projectName;
-                _logger.Information("Project: {ProjectName}", projectName);
+                if (projectName.Length > 0)
+                    _logger.Information("Project: {ProjectName}", projectName);
             }));
         }
 
@@ -101,7 +102,10 @@ namespace BackupCSApp
             this.Dispatcher.Invoke(new Action(() =>
             {
                 Total.Text += totalLine + "\n";
-                _logger.Information("{TotalLine}", totalLine);
+                if (totalLine.Length > 0 & totalLine != "\n")
+                {
+                    _logger.Information("{TotalLine}", totalLine);
+                }
             }));
         }
     }
